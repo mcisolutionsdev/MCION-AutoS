@@ -1,0 +1,8 @@
+customtkinter
+selenium
+Pillow
+pytesseract
+chromedriver-autoinstaller
+bs4
+requests
+

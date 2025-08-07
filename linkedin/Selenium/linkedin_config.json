@@ -1,0 +1,7 @@
+{
+    "chrome_path": "/usr/bin/google-chrome",
+    "profile_path": "/home/nguyen-duc-kien/.config/google-chrome/",
+    "profile_name": "Default",
+    "profile_url": "https://www.linkedin.com/",
+    "posts_file": "linkedin_posts.json"
+}

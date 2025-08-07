@@ -1,0 +1,13 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+*.pyc
+/venv
+*/__pycache__/
+*\.env
+__pycache__/automation.cpython-39.pyc
+__pycache__/crawler_data.cpython-39.pyc
+/__pycache__/
+# *\migrations
+
+DesktopApp/venv
+tiktok/venv
+youtube/Restapi

@@ -1,0 +1,10 @@
+selenium
+requests
+pyqt5
+pyinstaller
+pandas
+openpyxl
+pyperclip
+pyautogui
+python-dotenv
+#pyinstaller --onefile --icon=icon.ico --hidden-import pywinauto --hidden-import win32timezone --hidden-import keyring.backends.Windows --add-data "static/qss;static/qss" --add-data ".env;." --add-data "icon.ico;." --add-data "data;data" main.py

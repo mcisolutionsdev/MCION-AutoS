@@ -1,0 +1,84 @@
+2025-04-24 08:57:38,218 - INFO - Đã đọc 3 bài đăng từ file JSON
+2025-04-24 08:59:21,065 - INFO - Đã đọc 3 bài đăng từ file JSON
+2025-04-24 08:59:24,741 - INFO - Đã khởi tạo trình duyệt thành công
+2025-04-24 08:59:30,976 - INFO - Đã điều hướng đến https://www.linkedin.com/in/nguyen-duc-kien-b41421345/
+2025-04-24 08:59:30,976 - INFO - Đang xử lý bài đăng 1/3
+2025-04-24 08:59:33,138 - INFO - Đã nhấp vào nút tạo bài đăng
+2025-04-24 08:59:34,334 - INFO - Đã nhập nội dung bài đăng: 'Content 1...'
+2025-04-24 08:59:41,071 - INFO - Đã tải lên hình ảnh: /home/nguyen-duc-kien/OneDrive/Hình ảnh/632051.png
+2025-04-24 08:59:44,155 - INFO - Đã đăng bài viết thành công
+2025-04-24 08:59:44,155 - INFO - Đã hoàn thành đăng bài
+2025-04-24 08:59:44,155 - INFO - Đã đăng bài thứ 1 thành công
+2025-04-24 08:59:44,155 - INFO - Chờ 30 giây trước khi đăng bài tiếp theo...
+2025-04-24 09:00:14,186 - INFO - Đang xử lý bài đăng 2/3
+2025-04-24 09:00:16,340 - INFO - Đã nhấp vào nút tạo bài đăng
+2025-04-24 09:00:17,542 - INFO - Đã nhập nội dung bài đăng: 'Content 2...'
+2025-04-24 09:00:24,180 - INFO - Đã tải lên hình ảnh: /home/nguyen-duc-kien/OneDrive/Hình ảnh/632051.png
+2025-04-24 09:00:27,270 - INFO - Đã đăng bài viết thành công
+2025-04-24 09:00:27,270 - INFO - Đã hoàn thành đăng bài
+2025-04-24 09:00:27,271 - INFO - Đã đăng bài thứ 2 thành công
+2025-04-24 09:00:27,271 - INFO - Chờ 30 giây trước khi đăng bài tiếp theo...
+2025-04-24 09:00:57,301 - INFO - Đang xử lý bài đăng 3/3
+2025-04-24 09:00:58,363 - ERROR - Lỗi khi tạo bài đăng: Message: element click intercepted: Element <a class="optional-action-target-wrapper artdeco-button artdeco-button--secondary artdeco-button--standard artdeco-button--2 artdeco-button--default 
+            inline-flex justify-center align-self-flex-start button-placement-wrap
+            
+            " target="_self" aria-hidden="false" id="navigation-create-post-Create-a-post" href="https://www.linkedin.com/in/nguyen-duc-kien-b41421345/overlay/create-post" data-artdeco-is-focused="true">...</a> is not clickable at point (736, 16). Other element would receive the click: <a class="ghxRsBXmecCydZIwBdHbcBaWCicLMOywMKCY  
+         global-nav__primary-link" target="_self" data-view-name="" href="https://www.linkedin.com/messaging/?" data-test-app-aware-link="">...</a>
+  (Session info: chrome=135.0.7049.95)
+Stacktrace:
+#0 0x58d40811175a <unknown>
+#1 0x58d407bc44b0 <unknown>
+#2 0x58d407c1c7dc <unknown>
+#3 0x58d407c1a645 <unknown>
+#4 0x58d407c17ce2 <unknown>
+#5 0x58d407c173e0 <unknown>
+#6 0x58d407c099ed <unknown>
+#7 0x58d407c3b592 <unknown>
+#8 0x58d407c0936a <unknown>
+#9 0x58d407c3b75e <unknown>
+#10 0x58d407c615e0 <unknown>
+#11 0x58d407c3b363 <unknown>
+#12 0x58d407c07d63 <unknown>
+#13 0x58d407c089c1 <unknown>
+#14 0x58d4080d6a6b <unknown>
+#15 0x58d4080da951 <unknown>
+#16 0x58d4080beb62 <unknown>
+#17 0x58d4080db4c4 <unknown>
+#18 0x58d4080a313f <unknown>
+#19 0x58d4080ff6f8 <unknown>
+#20 0x58d4080ff8d6 <unknown>
+#21 0x58d4081105a6 <unknown>
+#22 0x7c436569caa4 <unknown>
+#23 0x7c4365729c3c <unknown>
+
+2025-04-24 09:00:58,364 - ERROR - Không thể đăng bài thứ 3
+2025-04-24 09:00:58,417 - INFO - Đã đóng trình duyệt
+2025-04-24 09:00:58,417 - INFO - Đã đăng thành công 2/3 bài viết
+2025-04-24 09:02:11,877 - INFO - Đã đọc 3 bài đăng từ file JSON
+2025-04-24 09:02:14,020 - INFO - Đã khởi tạo trình duyệt thành công
+2025-04-24 09:02:24,037 - INFO - Đã điều hướng đến https://www.linkedin.com/in/nguyen-duc-kien-b41421345/
+2025-04-24 09:02:24,037 - INFO - Đang xử lý bài đăng 1/3
+2025-04-24 09:02:26,212 - INFO - Đã nhấp vào nút tạo bài đăng
+2025-04-24 09:02:27,497 - INFO - Đã nhập nội dung bài đăng: 'Content 1...'
+2025-04-24 09:02:34,134 - INFO - Đã tải lên hình ảnh: /home/nguyen-duc-kien/OneDrive/Hình ảnh/632051.png
+2025-04-24 09:02:37,311 - INFO - Đã đăng bài viết thành công
+2025-04-24 09:02:37,311 - INFO - Đã hoàn thành đăng bài
+2025-04-24 09:02:37,311 - INFO - Đã đăng bài thứ 1 thành công
+2025-04-24 09:02:37,312 - INFO - Chờ 30 giây trước khi đăng bài tiếp theo...
+2025-04-24 09:03:07,322 - INFO - Đang xử lý bài đăng 2/3
+2025-04-24 09:03:09,458 - INFO - Đã nhấp vào nút tạo bài đăng
+2025-04-24 09:03:10,658 - INFO - Đã nhập nội dung bài đăng: 'Content 2...'
+2025-04-24 09:03:17,461 - INFO - Đã tải lên hình ảnh: /home/nguyen-duc-kien/OneDrive/Hình ảnh/632051.png
+2025-04-24 09:03:20,538 - INFO - Đã đăng bài viết thành công
+2025-04-24 09:03:20,538 - INFO - Đã hoàn thành đăng bài
+2025-04-24 09:03:20,538 - INFO - Đã đăng bài thứ 2 thành công
+2025-04-24 09:03:20,538 - INFO - Chờ 30 giây trước khi đăng bài tiếp theo...
+2025-04-24 09:03:50,547 - INFO - Đang xử lý bài đăng 3/3
+2025-04-24 09:03:52,635 - INFO - Đã nhấp vào nút tạo bài đăng
+2025-04-24 09:03:53,840 - INFO - Đã nhập nội dung bài đăng: 'Content 3...'
+2025-04-24 09:04:00,464 - INFO - Đã tải lên hình ảnh: /home/nguyen-duc-kien/OneDrive/Hình ảnh/632051.png
+2025-04-24 09:04:03,731 - INFO - Đã đăng bài viết thành công
+2025-04-24 09:04:03,731 - INFO - Đã hoàn thành đăng bài
+2025-04-24 09:04:03,731 - INFO - Đã đăng bài thứ 3 thành công
+2025-04-24 09:04:03,799 - INFO - Đã đóng trình duyệt
+2025-04-24 09:04:03,799 - INFO - Đã đăng thành công 3/3 bài viết
