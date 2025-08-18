@@ -349,5 +349,6 @@ def main(chrome_path, user_data_dir, excel_file_path):
             finally:
                 if driver:
                     driver.quit()
+                    driver.close()
 
     print("✅ Đã hoàn thành tất cả các bài đăng.")
