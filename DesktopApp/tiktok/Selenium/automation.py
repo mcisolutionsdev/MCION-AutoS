@@ -8,6 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 
 def find_to_driver(chrome_path,user_data_dir,profile_name):
     # Khởi chạy Chrome bằng subprocess
@@ -161,146 +162,135 @@ def set_date(driver, day, month, year):
     print(f"✅ Đã chọn ngày {day}-{month}-{year}")
     time.sleep(0.5)
 
-def create_post(driver, message, video_path,address,hour, minute,day,month,year, timeout=10):
-    
-    driver.get("https://www.tiktok.com/tiktokstudio/upload?from=webapp")
-    wait = WebDriverWait(driver, 10)
-
-    # Đợi trang load, có nút Chọn video xuất hiện
-    wait.until(EC.presence_of_element_located((
-        By.CSS_SELECTOR,
-        '[data-e2e="select_video_button"]'
-    )))
-    print("✅ Trang upload đã load")
-
-    # Tìm input hidden
-    input_file = driver.find_element(
-        By.CSS_SELECTOR,
-        'input[type="file"][accept="video/*"]'
-    )
-
-    # Upload video
-    input_file.send_keys(video_path)
-    print("✅ Đã gửi path video vào input")
-    WebDriverWait(driver, 200).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "div.info-progress.success"))
-    )
-    wait = WebDriverWait(driver, 10)
-
-    caption_box = wait.until(
-        EC.presence_of_element_located(
-            (By.CSS_SELECTOR, 'div[contenteditable="true"]')
-        )
-    )
-    caption_box = driver.find_element(By.CSS_SELECTOR, 'div[contenteditable="true"]')
-
-    caption_box.click()
-    time.sleep(1)
-    caption_box.send_keys(Keys.CONTROL, 'a')  # hoặc Keys.COMMAND nếu bạn dùng macOS
-    caption_box.send_keys(Keys.DELETE)
-
-    # Gửi tin nhắn mới
-    caption_box.send_keys(message)
+def create_post(driver, message, video_path, address, hour, minute, day, month, year, timeout=10):
     try:
-        search_input = wait.until(
-        EC.presence_of_element_located(
-                (By.CSS_SELECTOR, 'input[placeholder="Tìm kiếm vị trí"]')
+        driver.get("https://www.tiktok.com/tiktokstudio/upload?from=webapp")
+        wait = WebDriverWait(driver, 10)
+
+        # Đợi trang load, có nút Chọn video xuất hiện
+        wait.until(EC.presence_of_element_located((
+            By.CSS_SELECTOR, '[data-e2e="select_video_button"]'
+        )))
+        print("✅ Trang upload đã load")
+
+        # Tìm input hidden
+        try:
+            input_file = driver.find_element(
+                By.CSS_SELECTOR, 'input[type="file"][accept="video/*"]'
             )
-        )
-        search_input.click()
-        search_input.clear()
-        search_input.send_keys(address)
-        print("✅ Đã nhập text tìm kiếm:", address)
-            
-        # Chờ phần tử đầu tiên xuất hiện
-        first_option = wait.until(
-            EC.visibility_of_element_located(
-                (By.CSS_SELECTOR, 'div[role="option"]')
+            input_file.send_keys(video_path)
+            print("✅ Đã gửi path video vào input")
+        except Exception as e:
+            print("❌ Không tìm thấy input video:", str(e))
+            return
+
+        # Chờ video upload xong
+        try:
+            WebDriverWait(driver, 200).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "div.info-progress.success"))
             )
-        )
-        print("✅ Phát hiện phần tử đầu tiên:", first_option.text)
+            print("✅ Video đã upload xong")
+        except Exception as e:
+            print("❌ Upload video lỗi hoặc timeout:", str(e))
 
-        # Click phần tử đầu tiên
-        first_option.click()
-        print("✅ Đã click phần tử đầu tiên.")
-    except:
-      print('An exception occurred')
-
-    label = wait.until(
-        EC.presence_of_element_located(
-            (By.XPATH, '//label[.//span[text()="Lên lịch"]]')
-        )
-    )
-
-    # 2. Scroll đến label
-    driver.execute_script(
-        "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});",
-        label
-    )
-    print("✅ Đã scroll đến radio Lên lịch")
-
-    # 3. Chờ click được
-    wait.until(EC.element_to_be_clickable(
-        (By.XPATH, '//label[.//span[text()="Lên lịch"]]')
-    )).click()
-
-    print("✅ Đã click radio Lên lịch")
-
-    # Chờ đến khi input thời gian hiện ra và có thể click
-    wait = WebDriverWait(driver, 10)
-    time_input = wait.until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, 'input.TUXTextInputCore-input[readonly]')
-        )
-    )
-    time_input.click()
-    print("✅ Đã click input giờ")
-
-    # 2. Đợi dropdown hiện ra
-    wait.until(
-        EC.visibility_of_element_located(
-            (By.CSS_SELECTOR, ".tiktok-timepicker-time-picker-container")
-        )
-    )
-    print("✅ Dropdown hiện ra")
-
-    set_time(driver, hour, minute)
-    set_date(driver, day, month, year)
-    try:
-        # Chờ spinner biến mất (nếu có)
-        wait.until_not(
-            EC.presence_of_element_located(
-                (By.CSS_SELECTOR, '.Button__spinner--loading-true')
+        # Click nút Bật nếu có
+        try:
+            button = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, 
+                    ".Button__content.Button__content--type-primary"))
             )
-        )
-    except:
-        print("⚠️ Spinner không biến mất. Tiếp tục click nút.")
-    try:
-        # Chờ tối đa 10 giây để phần tử xuất hiện và có thể click
-        switch_wrapper = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((
-                By.CSS_SELECTOR,
-                "div.Switch__content--checked-true"
+            driver.execute_script("arguments[0].click();", button)
+            print("✅ Đã click nút Bật")
+        except:
+            print("⚠️ Không tìm thấy nút Bật")
+
+        # Caption
+        try:
+            caption_box = wait.until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, 'div[contenteditable="true"]'))
+            )
+            caption_box.click()
+            time.sleep(1)
+            caption_box.send_keys(Keys.CONTROL, 'a')  # hoặc Keys.COMMAND trên macOS
+            caption_box.send_keys(Keys.DELETE)
+            caption_box.send_keys(message)
+            print("✅ Đã nhập caption")
+        except Exception as e:
+            print("❌ Không nhập được caption:", str(e))
+
+        # Địa chỉ
+        try:
+            search_input = wait.until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, 'input[placeholder="Tìm kiếm vị trí"]'))
+            )
+            search_input.click()
+            search_input.clear()
+            search_input.send_keys(address)
+            print("✅ Đã nhập địa chỉ:", address)
+
+            first_option = wait.until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, 'div[role="option"]'))
+            )
+            first_option.click()
+            print("✅ Đã chọn địa chỉ đầu tiên")
+        except Exception as e:
+            print("⚠️ Không thể nhập/ chọn địa chỉ:", str(e))
+
+        # Lên lịch
+        try:
+            label = wait.until(
+                EC.presence_of_element_located((By.XPATH, '//label[.//span[text()="Lên lịch"]]'))
+            )
+            driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", label)
+            label.click()
+            print("✅ Đã bật chế độ Lên lịch")
+        except Exception as e:
+            print("❌ Không click được radio Lên lịch:", str(e))
+
+        # Chọn giờ/ngày
+        try:
+            time_input = wait.until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, 'input.TUXTextInputCore-input[readonly]'))
+            )
+            time_input.click()
+            wait.until(EC.visibility_of_element_located(
+                (By.CSS_SELECTOR, ".tiktok-timepicker-time-picker-container")
             ))
-        )
-        
-        switch_wrapper.click()
-        print("✅ Đã tắt switch (unchecked)")
-    except Exception as e:
-        print("❌ Không thể click để tắt switch:", str(e))
-    # Tìm nút Lên lịch
-    schedule_btn = wait.until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, '[data-e2e="post_video_button"]')
-        )
-    )
+            print("✅ Dropdown chọn thời gian hiện ra")
 
-    # Scroll vào view và click
-    driver.execute_script("arguments[0].scrollIntoView(true);", schedule_btn)
-    time.sleep(0.2)
-    driver.execute_script("arguments[0].click();", schedule_btn)
-    print("✅ Đã click nút Lên lịch.")
-    time.sleep(3)
+            set_time(driver, hour, minute)
+            set_date(driver, day, month, year)
+        except Exception as e:
+            print("❌ Không set được thời gian:", str(e))
+
+        # Tắt switch (nếu có)
+        try:
+            switch_wrapper = WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, "div.Switch__content--checked-true"))
+            )
+            switch_wrapper.click()
+            print("✅ Đã tắt switch (unchecked)")
+        except:
+            print("⚠️ Không tìm thấy switch hoặc đã tắt sẵn")
+
+        # Click Lên lịch
+        try:
+            schedule_btn = wait.until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-e2e="post_video_button"]'))
+            )
+            driver.execute_script("arguments[0].scrollIntoView(true);", schedule_btn)
+            time.sleep(0.2)
+            driver.execute_script("arguments[0].click();", schedule_btn)
+            print("✅ Đã click nút Lên lịch")
+        except Exception as e:
+            print("❌ Không click được nút Lên lịch:", str(e))
+
+    except Exception as e:
+        print("❌ Lỗi không xác định trong create_post:", str(e))
+
+    finally:
+        time.sleep(3)
+
 
 def run_one_post(driver, row):
     create_post(
@@ -314,7 +304,7 @@ def run_one_post(driver, row):
         month=str(row["month"]),
         year=str(row["year"]),
     )
-
+    
 def main(chrome_path, user_data_dir, excel_file_path):
     df = pd.read_excel(excel_file_path)
 
@@ -322,12 +312,13 @@ def main(chrome_path, user_data_dir, excel_file_path):
         profile_name = row["profile"]
         print(f"\n=== Đang chạy bài số {idx+1}: {row['message']} trên profile {profile_name} ===")
 
+        # 👉 Mở driver 1 lần duy nhất cho profile này
         driver = find_to_driver(
             chrome_path=chrome_path,
             user_data_dir=user_data_dir,
             profile_name=profile_name
         )
-        
+
         max_retry = 2
         last_exception = None
 
@@ -335,19 +326,23 @@ def main(chrome_path, user_data_dir, excel_file_path):
             try:
                 run_one_post(driver, row)
                 print(f"✅ Bài số {idx+1} chạy thành công trên profile {profile_name}!")
-                break
-
+                break  # Thành công thì thoát retry
             except Exception as e:
-                print(f"❌ Lỗi ở lần chạy thứ {attempt} của bài {idx+1} trên profile {profile_name}: {e}")
+                print(f"❌ Lỗi lần {attempt} của bài {idx+1} trên profile {profile_name}: {e}")
                 last_exception = e
 
                 if attempt < max_retry:
                     print("→ Thử chạy lại sau 3 giây...")
                     time.sleep(3)
                 else:
-                    print("‼️ Đã thử tối đa. Bỏ qua bài này.")
-            finally:
-                if driver:
-                    driver.quit()
+                    print("‼️ Đã thử tối đa, bỏ qua bài này.")
+
+        # 👉 Sau khi xong profile (thành công hoặc fail), đóng driver
+        try:
+            driver.quit()
+            driver.close()
+            print(f"🔒 Đã đóng Chrome profile {profile_name}")
+        except Exception as e:
+            print("⚠️ Lỗi khi đóng driver:", e)
 
     print("✅ Đã hoàn thành tất cả các bài đăng.")
