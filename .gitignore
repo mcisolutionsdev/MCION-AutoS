@@ -11,3 +11,5 @@ __pycache__/crawler_data.cpython-39.pyc
 DesktopApp/venv
 tiktok/venv
 youtube/Restapi
+DesktopApp/build
+DesktopApp/dist
