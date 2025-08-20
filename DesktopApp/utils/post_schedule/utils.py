@@ -137,11 +137,14 @@ def create_reels(driver,video_path,small_image_path,title, description, address,
             (By.XPATH, "//input[@placeholder='Thêm tiêu đề cho thước phim']")
         )
         )
-        title_input.click()
+        driver.execute_script("arguments[0].click();", title_input)
+
         title_input.clear()
         title_input.send_keys(title)  # biến title chứa nội dung bạn muốn nhập
     except:
       print('An exception occurred')
+    wait = WebDriverWait(driver, 1)
+      
     try:
         desc_box = wait.until(
         EC.element_to_be_clickable((
@@ -242,6 +245,7 @@ def create_reels(driver,video_path,small_image_path,title, description, address,
             
         # Nhập vị trí
         try:
+            time.sleep(2)
             location_input = wait.until(
                 EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Nhập vị trí']"))
             )
@@ -348,10 +352,10 @@ def create_reels(driver,video_path,small_image_path,title, description, address,
         # Gửi từng tag
         for tag in tags:
             tag_input.send_keys(tag)
-            time.sleep(0.5)
+            time.sleep(1)
             tag_input.send_keys(Keys.ENTER)
             print(f"✅ Đã thêm tag: {tag}")
-            time.sleep(0.3)
+            time.sleep(0.7)
 
     except Exception as e:
         print("⚠️ Khoáng thể tìm thấy nút 'Tiếp' hoặc không thể click:", e)

@@ -9,6 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 
 def find_to_driver(chrome_path,user_data_dir,profile_name):
     # Khởi chạy Chrome bằng subprocess
@@ -284,7 +285,20 @@ def create_post(driver, message, video_path, address, hour, minute, day, month, 
             print("✅ Đã click nút Lên lịch")
         except Exception as e:
             print("❌ Không click được nút Lên lịch:", str(e))
+        try:
+            # Tìm nút theo text "Đăng ngay"
+            button = driver.find_element(By.XPATH, "//button[.//div[contains(text(),'Đăng ngay')]]")
+            
+            # Nếu tìm thấy thì click
+            button.click()
+            print("✅ Đã click vào nút 'Đăng ngay'.")
 
+        except NoSuchElementException:
+            print("❌ Không tìm thấy nút 'Đăng ngay'.")
+        except ElementClickInterceptedException:
+            print("⚠️ Tìm thấy nút nhưng không thể click (bị che hoặc disabled).")
+        except Exception as e:
+            print(f"⚠️ Có lỗi xảy ra: {e}")
     except Exception as e:
         print("❌ Lỗi không xác định trong create_post:", str(e))
 
